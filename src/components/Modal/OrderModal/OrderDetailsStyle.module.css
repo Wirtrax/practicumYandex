@@ -1,0 +1,26 @@
+.bgBlure{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+
+    background-color: rgba(0, 0, 0, 0.6); 
+}
+.container{
+    text-Align:center;
+    position:relative;
+    max-Width:480px;
+    background-Color:rgba(28, 28, 33, 1);
+    border-Radius:40px;
+}
+
+.closePopup{
+    position:absolute;
+    right: 0px; 
+    top:0px;
+}

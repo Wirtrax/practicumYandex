@@ -1,0 +1,19 @@
+.scrollContainer{
+    height: 70vh;
+    overflow-Y: auto;
+    width: 100%;
+    scrollbar-Width: thin;
+}
+
+.mainContainer{
+    display: grid;
+    grid-Template-Columns: 1fr 1fr;
+    text-Align: center;
+}
+
+.priceGroup{
+    display: flex;
+    align-Items: center; 
+    justify-Content: center; 
+    gap: 4px;
+}
