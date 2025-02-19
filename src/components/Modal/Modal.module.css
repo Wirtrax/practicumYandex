@@ -1,0 +1,30 @@
+.overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+
+    background-color: rgba(0, 0, 0, 0.6); 
+}
+
+.modal {
+    text-Align:center;
+    position:relative;
+    max-Width:780px;
+    background-Color:rgba(28, 28, 33, 1);
+    border-Radius:40px;
+}
+
+.closeButton {
+    position:absolute;
+    right: 16px; 
+    top:20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
