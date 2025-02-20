@@ -3,7 +3,7 @@ import AppHeader from "./components/AppHeader/AppHeader.jsx";
 import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor.jsx";
 import BurgerIngredients from "./components/BurgerIngredients/BurgerIngredients.jsx";
 import OrderDetails from "./components/Modal/OrderModal/OrderDetails";
-import InfoModal from "./components/Modal/InfoModal/InfoModal";
+import IngredientDetails from "./components/Modal/IngredientDetails/IngredientDetails.jsx";
 import Modal from "./components/Modal/Modal.jsx";
 
 import style from './App.module.css';
@@ -18,7 +18,7 @@ function App() {
     setSelectedIngredient(ingredient);
   };
 
-  const closeInfoModal = () => {
+  const closeIngredientDetails = () => {
     setSelectedIngredient(null);
   };
 
@@ -44,15 +44,15 @@ function App() {
   return (
     <>
       <AppHeader />
-      <div className={style.appGroup}>
+      <main className={style.appGroup}>
         <BurgerIngredients ingredients={ingredients} onIngredientClick={handleIngredientClick} />
         <BurgerConstructor bun={bun} ingredients={ingredients} onOrderClick={openOrderModal} />
-      </div>
+      </main>
 
-      
+
       {selectedIngredient && (
-        <Modal onClose={closeInfoModal}>
-          <InfoModal ingredient={selectedIngredient} />
+        <Modal onClose={closeIngredientDetails}>
+          <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
       )}
 

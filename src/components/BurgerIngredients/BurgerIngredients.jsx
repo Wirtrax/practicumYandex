@@ -4,7 +4,7 @@ import styles from "./BurgerIngredientsStyle.module.css";
 
 function Tab({ currentCategory, onCategoryChange, categories }) {
   return (
-    <div style={{ display: "flex" }}>
+    <div className={styles.tabContainer}>
       {categories.map(({ type, name }) => (
         <ImportedTab
           key={type}
@@ -27,12 +27,11 @@ function IngredientCategory({ type, name, ingredients, onIngredientClick, catego
         {ingredients.map((ingredient) => (
           <div
             key={ingredient._id}
-            className="pl-4 pr-6 pb-8"
-            style={{ position: "relative" }}
+            className={`${styles.carIngridient} pl-4 pr-6 pb-8`}
             onClick={() => onIngredientClick(ingredient)}
           >
             {counts[ingredient._id] > 0 && <Counter count={counts[ingredient._id]} />}
-            <img src={ingredient.image} alt={ingredient.name} className="pl-4 pr-4 pb-1" style={{ width: "200px" }} />
+            <img src={ingredient.image} alt={ingredient.name} className={`${styles.igridientImg} pl-4 pr-4 pb-1`} />
             <p className={`${styles.priceGroup} text text_type_digits-default`}>
               <CurrencyIcon /> {ingredient.price}
             </p>
@@ -82,7 +81,7 @@ function BurgerIngredients({ ingredients, onIngredientClick }) {
   return (
     <div>
       <p className="text text_type_main-large pb-5 pt-10">Соберите бургер</p>
-      <div style={{ maxWidth: "600px" }}>
+      <div className={styles.BurgerIngredientsContainer}>
         <Tab currentCategory={currentCategory}
           onCategoryChange={setCurrentCategory}
           categories={categories} />
