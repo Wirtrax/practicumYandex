@@ -30,15 +30,21 @@ function App() {
     setIsOrderModalOpen(false);
   };
 
+  const API = "https://norma.nomoreparties.space/api/ingredients"
   useEffect(() => {
-    fetch("https://norma.nomoreparties.space/api/ingredients")
-      .then((response) => response.json())
+    fetch(API)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.status === 404 ? "Данные не нашлись" : "Что-то пошло не так :(");
+        }
+        return response.json();
+      })
       .then((data) => {
         setIngredients(data.data);
         const buns = data.data.filter((item) => item.type === "bun");
         if (buns.length > 0) setBun(buns[0]);
       })
-      .catch((error) => console.error("Error fetching ingredients:", error));
+      .catch((error) => console.error(error.message));
   }, []);
 
   return (
