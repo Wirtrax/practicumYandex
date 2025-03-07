@@ -1,4 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchIngredients } from './services/actions/ingredientsActions';
+import { clearCurrentIngredient, setCurrentIngredient } from './services/actions/ingredientDetailsActions';
+import { createOrderAction } from './services/actions/orderActions';
+
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import AppHeader from "./components/AppHeader/AppHeader.jsx";
 import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor.jsx";
 import BurgerIngredients from "./components/BurgerIngredients/BurgerIngredients.jsx";
@@ -9,65 +18,61 @@ import Modal from "./components/Modal/Modal.jsx";
 import style from './App.module.css';
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
-  const [bun, setBun] = useState(null);
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const dispatch = useDispatch();
+  const { ingredients } = useSelector((state) => state.ingredients);
+  const { currentIngredient } = useSelector((state) => state.ingredientDetails);
+  const { orderNumber } = useSelector((state) => state.order);
+  const { bun, ingredients: constructorIngredients } = useSelector((state) => state.burgerConstructor);
+  
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
-  const handleIngredientClick = (ingredient) => {
-    setSelectedIngredient(ingredient);
-  };
+  useEffect(() => {
+    dispatch(fetchIngredients());
+  }, [dispatch]);
 
-  const closeIngredientDetails = () => {
-    setSelectedIngredient(null);
+  const handleIngredientClick = (ingredient) => {
+    dispatch(setCurrentIngredient(ingredient));
   };
 
   const openOrderModal = () => {
-    setIsOrderModalOpen(true);
+    const ingredientsIds = [
+      bun?._id,
+      ...constructorIngredients.map((ingredient) => ingredient._id),
+      bun?._id,
+    ].filter(Boolean);
+
+    if (ingredientsIds.length > 0) {
+      dispatch(createOrderAction(ingredientsIds));
+      setIsOrderModalOpen(true);
+    } else {
+      alert('Добавьте ингредиенты в конструктор!');
+    }
   };
 
   const closeOrderModal = () => {
     setIsOrderModalOpen(false);
   };
 
-  const API = "https://norma.nomoreparties.space/api/ingredients"
-  useEffect(() => {
-    fetch(API)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(response.status === 404 ? "Данные не нашлись" : "Что-то пошло не так :(");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setIngredients(data.data);
-        const buns = data.data.filter((item) => item.type === "bun");
-        if (buns.length > 0) setBun(buns[0]);
-      })
-      .catch((error) => console.error(error.message));
-  }, []);
-
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       <AppHeader />
       <main className={style.appGroup}>
         <BurgerIngredients ingredients={ingredients} onIngredientClick={handleIngredientClick} />
-        <BurgerConstructor bun={bun} ingredients={ingredients} onOrderClick={openOrderModal} />
+        <BurgerConstructor openOrderModal={openOrderModal} />
       </main>
 
-
-      {selectedIngredient && (
-        <Modal onClose={closeIngredientDetails}>
-          <IngredientDetails ingredient={selectedIngredient} />
+      {currentIngredient && (
+        <Modal onClose={() => dispatch(clearCurrentIngredient())}>
+          <IngredientDetails ingredient={currentIngredient} />
         </Modal>
       )}
 
       {isOrderModalOpen && (
         <Modal onClose={closeOrderModal}>
-          <OrderDetails />
+          <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
-    </>
+    </DndProvider>
   );
 }
 
