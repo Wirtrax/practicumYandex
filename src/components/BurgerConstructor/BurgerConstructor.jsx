@@ -7,6 +7,10 @@ import { addIngredient, removeIngredient, moveIngredient } from '../../services/
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./BurgerConstructor.module.css";
 
+import { BurgerConstructorPropTypes, DraggableIngredientPropTypes } from './burgerConstructor.propTypes.js';
+BurgerConstructor.propTypes = BurgerConstructorPropTypes;
+DraggableIngredient.propTypes = DraggableIngredientPropTypes;
+
 function BurgerConstructor({ openOrderModal }) {
     const dispatch = useDispatch();
     const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
@@ -45,7 +49,7 @@ function BurgerConstructor({ openOrderModal }) {
             <div className={style.scrollBar}>
                 {ingredients.map((ingredient, index) => (
                     <DraggableIngredient
-                        key={`${ingredient._id}-${index}`}
+                        key={`${ingredient.uuid}`}
                         ingredient={ingredient}
                         index={index}
                         moveIngredientHandler={moveIngredientHandler}

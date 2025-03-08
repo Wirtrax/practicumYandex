@@ -19,11 +19,10 @@ import style from './App.module.css';
 
 function App() {
   const dispatch = useDispatch();
-  const { ingredients } = useSelector((state) => state.ingredients);
   const { currentIngredient } = useSelector((state) => state.ingredientDetails);
   const { orderNumber } = useSelector((state) => state.order);
   const { bun, ingredients: constructorIngredients } = useSelector((state) => state.burgerConstructor);
-  
+
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   useEffect(() => {
@@ -54,13 +53,14 @@ function App() {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <>
       <AppHeader />
-      <main className={style.appGroup}>
-        <BurgerIngredients ingredients={ingredients} onIngredientClick={handleIngredientClick} />
-        <BurgerConstructor openOrderModal={openOrderModal} />
-      </main>
-
+      <DndProvider backend={HTML5Backend}>
+        <main className={style.appGroup}>
+          <BurgerIngredients onIngredientClick={handleIngredientClick} />
+          <BurgerConstructor openOrderModal={openOrderModal} />
+        </main>
+      </DndProvider>
       {currentIngredient && (
         <Modal onClose={() => dispatch(clearCurrentIngredient())}>
           <IngredientDetails ingredient={currentIngredient} />
@@ -72,7 +72,8 @@ function App() {
           <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
-    </DndProvider>
+
+    </>
   );
 }
 

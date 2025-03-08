@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Modal.module.css";
+import ModalOverlay from "./ModalOverlay";
+import { ModalPropTypes } from './modal.propTypes.js';
+
+Modal.propTypes = ModalPropTypes;
 
 function Modal({ children, onClose }) {
 
@@ -19,14 +23,16 @@ function Modal({ children, onClose }) {
     }, [onClose]);
 
     return ReactDOM.createPortal(
-        <div className={styles.overlay} onClick={onClose}>
+
+        <ModalOverlay onClose={onClose}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <button className={styles.closeButton} onClick={onClose}>
                     <CloseIcon type="primary" />
                 </button>
                 {children}
             </div>
-        </div>,
+        </ModalOverlay>
+        ,
         document.getElementById("modal-root")
     );
 }

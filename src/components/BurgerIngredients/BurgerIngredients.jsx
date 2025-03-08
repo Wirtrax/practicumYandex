@@ -3,6 +3,12 @@ import { useSelector } from "react-redux";
 import { useDrag } from 'react-dnd';
 import { Counter, CurrencyIcon, Tab as ImportedTab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredientsStyle.module.css";
+import { TabPropTypes, IngredientCategoryPropTypes, IngredientPropTypes, BurgerIngredientsPropTypes } from './burgerIngredients.propTypes.js';
+
+Tab.propTypes = TabPropTypes;
+IngredientCategory.propTypes = IngredientCategoryPropTypes;
+Ingredient.propTypes = IngredientPropTypes;
+BurgerIngredients.propTypes = BurgerIngredientsPropTypes;
 
 function Tab({ currentCategory, onCategoryChange, categories, categoryRefs }) {
   const handleTabClick = (type) => {
@@ -69,8 +75,9 @@ function Ingredient({ ingredient, onIngredientClick, counts }) {
   );
 }
 
-function BurgerIngredients({ ingredients, onIngredientClick }) {
+function BurgerIngredients({ onIngredientClick }) {
   const [currentCategory, setCurrentCategory] = useState('bun');
+  const { ingredients } = useSelector((state) => state.ingredients);
   const { counts } = useSelector((state) => state.burgerConstructor);
   const categoryRefs = useRef({});
   const scrollContainerRef = useRef(null);
