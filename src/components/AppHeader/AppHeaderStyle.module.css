@@ -1,35 +1,43 @@
-html{
+html {
     font-size: 4px;
 }
 
-.container{
-    background-color:rgba(28, 28, 33, 1);
-    width: 100vw; 
+a {
+    text-decoration: inherit;
+    color: inherit;
 }
-.header{
+
+.container {
+    background-color: rgba(28, 28, 33, 1);
+    width: 100vw;
+}
+
+.header {
     max-width: 1280px;
     margin: 0 auto;
     padding: 5rem;
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
 }
 
-.header__order{
+.header__order {
     display: flex;
     gap: 2rem;
 }
 
-.header__profile{
+.header__profile {
     display: flex;
     justify-content: end;
 }
 
-.header__profile, .header__order{
+.header__profile,
+.header__order {
     width: 400px;
 }
 
-.header__order div, .headerButton {
+.header__order div,
+.headerButton {
     display: flex;
     align-items: center;
 

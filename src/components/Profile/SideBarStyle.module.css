@@ -1,0 +1,13 @@
+.sideBar{
+    max-width: 25%;
+}
+.sideBar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    margin-bottom: 80px ;
+}
+.sideBar nav p{
+    cursor: pointer;
+}
