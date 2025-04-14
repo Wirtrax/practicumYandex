@@ -1,23 +1,34 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 
 import { PasswordInput, Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Container from "../utils/container";
 import FormGroup from "../utils/FormGroup";
 import GroupSubButtom from "../utils/GroupSubButtom";
 import { resetPasswordRequest } from "../../../services/actions/passwordResetActions";
 import { useAppDispatch } from '../../../types/hooks';
+import { useForm } from "../../../hook/useForm";
 
 const ForgotPasswordConfirming: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [password, setPassword] = useState("");
-    const [token, setToken] = useState("");
+    const location = useLocation();
+
+    const { values, handleChange } = useForm({
+        password: "",
+        token: ""
+    });
+
+    useEffect(() => {
+        if (location.state?.fromForgotPassword !== true) {
+            navigate('/forgot-password', { replace: true });
+        }
+    }, [location.state, navigate]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!password || !token) return;
-        await dispatch(resetPasswordRequest(password, token));
+        if (!values.password || !values.token) return;
+        await dispatch(resetPasswordRequest(values.password, values.token));
         navigate("/login", { replace: true });
     };
 
@@ -25,15 +36,17 @@ const ForgotPasswordConfirming: React.FC = () => {
         <Container title={"Восстановление пароля"}>
             <FormGroup buttonName={"Сохранить"} onSubmit={handleSubmit}>
                 <PasswordInput
-                    value={password}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                    value={values.password}
+                    onChange={handleChange}
                     placeholder="Введите новый пароль"
+                    name="password"
                 />
                 <Input
                     type="text"
                     placeholder="Введите код из письма"
-                    value={token}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setToken(e.target.value)}
+                    value={values.token}
+                    onChange={handleChange}
+                    name="token"
                 />
             </FormGroup>
             <GroupSubButtom>

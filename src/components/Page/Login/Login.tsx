@@ -8,16 +8,21 @@ import FormGroup from "../utils/FormGroup";
 import GroupSubButtom from "../utils/GroupSubButtom";
 import { useAppDispatch } from '../../../types/hooks';
 
+import { useForm } from "../../../hook/useForm";
+
 const Login: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+
+    const { values, handleChange } = useForm({
+        email: "",
+        password: ""
+    });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!email || !password) return;
-        dispatch(login(email, password, navigate));
+        if (!values.email || !values.password) return;
+        dispatch(login(values.email, values.password, navigate));
     };
 
     return (
@@ -26,14 +31,15 @@ const Login: React.FC = () => {
                 <Input
                     type="email"
                     placeholder="E-mail"
-                    value={email}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                    name='email'
+                    value={values.email}
+                    onChange={(handleChange)}
                     error={false}
                     errorText="Ошибка"
                 />
                 <PasswordInput
-                    value={password}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                    value={values.password}
+                    onChange={(handleChange)}
                     name="password"
                 />
             </FormGroup>

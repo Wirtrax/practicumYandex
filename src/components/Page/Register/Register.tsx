@@ -8,18 +8,25 @@ import FormGroup from "../utils/FormGroup";
 import GroupSubButtom from "../utils/GroupSubButtom";
 import { useAppDispatch } from '../../../types/hooks';
 
+import { useForm } from "../../../hook/useForm";
+
+
 const Register: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+
+    const { values, handleChange } = useForm({
+        name: "",
+        email: "",
+        password: ""
+    });
+
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name || !email || !password) return;
-        if (password.length < 6) return;
-        dispatch(register(email, password, name, navigate));
+        if (!values.name || !values.email || !values.password) return;
+        if (values.password.length < 6) return;
+        dispatch(register(values.email, values.password, values.name, navigate));
     };
 
     return (
@@ -28,18 +35,20 @@ const Register: React.FC = () => {
                 <Input
                     type="text"
                     placeholder="Имя"
-                    value={name}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                    value={values.name}
+                    onChange={(handleChange)}
+                    name="name"
                 />
                 <Input
                     type="email"
                     placeholder="E-mail"
-                    value={email}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                    value={values.email}
+                    onChange={(handleChange)}
+                    name="email"
                 />
                 <PasswordInput
-                    value={password}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                    value={values.password}
+                    onChange={(handleChange)}
                     name="password"
                 />
             </FormGroup>

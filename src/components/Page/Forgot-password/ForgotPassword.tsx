@@ -1,24 +1,28 @@
-import React, { useState, ChangeEvent } from "react";
-
+import React from "react";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../utils/container";
 import FormGroup from "../utils/FormGroup";
 import GroupSubButtom from "../utils/GroupSubButtom";
-
 import { forgotPasswordRequest } from "../../../services/actions/passwordResetActions";
 import { useAppDispatch } from '../../../types/hooks';
+import { useForm } from "../../../hook/useForm";
+
 
 const ForgotPassword: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const { values, handleChange } = useForm({ email: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    await dispatch(forgotPasswordRequest(email));
-    navigate("/reset-password", { state: { fromForgotPassword: true } });
+    if (!values.email) return;
+    await dispatch(forgotPasswordRequest(values.email));
+    navigate("/reset-password", {
+      state: {
+        fromForgotPassword: true
+      }
+    });
   }
 
   return (
@@ -27,8 +31,9 @@ const ForgotPassword: React.FC = () => {
         <Input
           type="email"
           placeholder="Укажите e-mail"
-          value={email}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+          name="email"
+          value={values.email}
+          onChange={handleChange}
         />
       </FormGroup>
       <GroupSubButtom>

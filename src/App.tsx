@@ -16,10 +16,10 @@ import IngredientDetails from "./components/Modal/IngredientDetails/IngredientDe
 import Modal from "./components/Modal/Modal";
 
 import style from './App.module.css';
-import Login from "./components/Authentication/Login/Login";
-import Register from "./components/Authentication/Register/Register";
-import ForgotPassword from "./components/Authentication/Forgot-password/ForgotPassword";
-import ForgotPasswordConfirming from "./components/Authentication/Forgot-password/ForgotPasswordConfirming";
+import Login from "./components/Page/Login/Login";
+import Register from "./components/Page/Register/Register";
+import ForgotPassword from "./components/Page/Forgot-password/ForgotPassword";
+import ForgotPasswordConfirming from "./components/Page/Forgot-password/ForgotPasswordConfirming";
 import Profile from "./components/Profile/Profile";
 import { ProtectedAuthorizedRoute } from "./components/ProtectedRoutes/ProtectedAuthorizedRoute";
 import { ProtectedUnauthorizedRoute } from "./components/ProtectedRoutes/ProtectedUnauthorizedRoute"
@@ -32,6 +32,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { ingredients } = useAppSelector((state) => state.ingredients);
   const { currentIngredient } = useAppSelector((state) => state.ingredientDetails);
   const { orderNumber } = useAppSelector((state) => state.order);
   const { bun, ingredients: constructorIngredients } = useAppSelector((state) => state.burgerConstructor);
@@ -42,6 +43,7 @@ const App: React.FC = () => {
 
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [backgroundLocation, setBackgroundLocation] = useState<any>(null);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     dispatch(fetchIngredients());
@@ -54,7 +56,22 @@ const App: React.FC = () => {
     } else {
       setBackgroundLocation(null);
     }
-  }, [location])
+
+    if (location.pathname.startsWith('/ingredients/')) {
+      const ingredientId = location.pathname.split('/')[2];
+      const ingredient = ingredients.find((ing: Ingredient) => ing._id === ingredientId);
+
+      if (ingredient) {
+        dispatch(setCurrentIngredient(ingredient));
+
+        if (isInitialLoad && !location.state?.modal) {
+          setBackgroundLocation({ pathname: '/' });
+        }
+      }
+    }
+
+    setIsInitialLoad(false);
+  }, [location, ingredients, dispatch, navigate, isInitialLoad]);
 
   const handleIngredientClick = (ingredient: Ingredient) => {
     dispatch(setCurrentIngredient(ingredient));
@@ -127,7 +144,7 @@ const App: React.FC = () => {
         } />
       </Routes>
 
-      {location.state?.modal && currentIngredient && (
+      {backgroundLocation && currentIngredient && (
         <Modal onClose={closeIngredientModal}>
           <IngredientDetails />
         </Modal>
@@ -135,7 +152,7 @@ const App: React.FC = () => {
 
       {isOrderModalOpen && (
         <Modal onClose={closeOrderModal}>
-          <OrderDetails orderNumber={orderNumber ?? 0 } />
+          <OrderDetails orderNumber={orderNumber ?? 0} />
         </Modal>
       )}
     </>
