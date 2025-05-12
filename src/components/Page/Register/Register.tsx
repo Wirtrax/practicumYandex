@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React from "react";
 
 import { register } from "../../../services/actions/registrationAction";
 import { PasswordInput, Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";

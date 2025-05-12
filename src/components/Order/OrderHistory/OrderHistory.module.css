@@ -1,0 +1,24 @@
+.orderHistoryContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    padding: 5rem;
+    justify-content: start;
+    align-items: start;
+    gap: 60px;
+    margin-top: 5%;
+}
+
+.historyFeed {
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 80vh;
+
+    padding-bottom: 5px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    scrollbar-color: #8585AD #2f2f3700;
+}

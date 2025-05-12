@@ -1,5 +1,6 @@
 import { Ingredient, ConstructorIngredient } from './ingredient';
 import { User } from './user';
+import { Order } from './order';
 
 // Common action type
 export interface Action<T = any> {
@@ -9,7 +10,7 @@ export interface Action<T = any> {
 
 // Auth actions
 export interface LoginAction extends Action {
-    type: 'LOGIN_REQUEST' ;
+    type: 'LOGIN_REQUEST';
     payload?: string;
 }
 
@@ -191,6 +192,87 @@ export interface UpdateUserFailedAction extends Action {
     type: 'UPDATE_USER_FAILED';
 }
 
+// WebSocket actions
+export interface WSConnectionStartAction extends Action {
+    type: 'WS_CONNECTION_START';
+    payload: string;
+}
+
+export interface WSConnectionSuccessAction extends Action {
+    type: 'WS_CONNECTION_SUCCESS';
+}
+
+export interface WSConnectionErrorAction extends Action {
+    type: 'WS_CONNECTION_ERROR';
+    payload: string;
+}
+
+export interface WSConnectionClosedAction extends Action {
+    type: 'WS_CONNECTION_CLOSED';
+}
+
+export interface WSGetMessageAction extends Action {
+    type: 'WS_GET_MESSAGE';
+    payload: {
+        orders: Order[];
+        total: number;
+        totalToday: number;
+        ingredientsMap: Record<string, Ingredient>;
+    };
+}
+
+// User orders WebSocket actions
+export interface WSUserOrdersConnectionStartAction extends Action {
+    type: 'WS_USER_ORDERS_CONNECTION_START';
+    payload: string;
+}
+
+export interface WSUserOrdersConnectionSuccessAction extends Action {
+    type: 'WS_USER_ORDERS_CONNECTION_SUCCESS';
+}
+
+export interface WSUserOrdersConnectionErrorAction extends Action {
+    type: 'WS_USER_ORDERS_CONNECTION_ERROR';
+    payload: string;
+}
+
+export interface WSUserOrdersConnectionClosedAction extends Action {
+    type: 'WS_USER_ORDERS_CONNECTION_CLOSED';
+}
+
+export interface WSGetUserOrdersAction extends Action {
+    type: 'WS_GET_USER_ORDERS';
+    payload: {
+        orders: Order[];
+    };
+}
+
+// Order details actions
+export interface SetCurrentOrderAction extends Action {
+    type: 'SET_CURRENT_ORDER';
+    payload: Order;
+}
+
+export interface ClearCurrentOrderAction extends Action {
+    type: 'CLEAR_CURRENT_ORDER';
+}
+
+export interface GetOrderRequestAction extends Action {
+    type: 'GET_ORDER_REQUEST';
+}
+
+export interface GetOrderSuccessAction extends Action {
+    type: 'GET_ORDER_SUCCESS';
+    payload: Order;
+}
+
+export interface GetOrderFailedAction extends Action {
+    type: 'GET_ORDER_FAILED';
+    payload: string;
+}
+
+
+
 export type AuthActions = LoginAction | LoginSuccessAction | RegisterRequestAction | RegisterSuccessAction | RegisterFailedAction;
 export type ConstructorActions = AddIngredientAction | RemoveIngredientAction | MoveIngredientAction | UpdateCountsAction;
 export type IngredientDetailsActions = SetCurrentIngredientAction | ClearCurrentIngredientAction;
@@ -199,6 +281,9 @@ export type OrderActions = CreateOrderRequestAction | CreateOrderSuccessAction |
 export type PasswordResetActions = ForgotPasswordRequestAction | ForgotPasswordSuccessAction | ForgotPasswordFailedAction | ResetPasswordRequestAction | ResetPasswordSuccessAction | ResetPasswordFailedAction;
 export type RefreshTokenActions = AuthCheckRequestAction | AuthCheckSuccessAction | AuthCheckFailedAction | TokenRefreshRequestAction | TokenRefreshSuccessAction | TokenRefreshFailedAction | LogoutAction | AuthCheckCompletedAction;
 export type UpdateUserActions = GetUserRequestAction | GetUserSuccessAction | GetUserFailedAction | UpdateUserRequestAction | UpdateUserSuccessAction | UpdateUserFailedAction;
+export type WSActions = WSConnectionStartAction | WSConnectionSuccessAction | WSConnectionErrorAction | WSConnectionClosedAction | WSGetMessageAction;
+export type WSUserOrdersActions = WSUserOrdersConnectionStartAction | WSUserOrdersConnectionSuccessAction | WSUserOrdersConnectionErrorAction | WSUserOrdersConnectionClosedAction | WSGetUserOrdersAction;
+export type OrderDetailsActions = SetCurrentOrderAction | ClearCurrentOrderAction | GetOrderRequestAction | GetOrderSuccessAction | GetOrderFailedAction;
 
 export type AppActions =
     | AuthActions
@@ -208,4 +293,7 @@ export type AppActions =
     | OrderActions
     | PasswordResetActions
     | RefreshTokenActions
-    | UpdateUserActions;
+    | UpdateUserActions
+    | WSActions
+    | WSUserOrdersActions
+    | OrderDetailsActions;

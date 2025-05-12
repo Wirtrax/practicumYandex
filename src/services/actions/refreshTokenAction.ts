@@ -67,7 +67,6 @@ export const checkAuth = () => async (dispatch: AuthCheckDispatch) => {
         const userData = await apiGetUser(accessToken);
         dispatch({ type: AUTH_CHECK_SUCCESS, payload: userData.user });
 
-        // Приводим тип dispatch к нужному для startTokenRefresh
         startTokenRefresh(dispatch as unknown as TokenRefreshDispatch);
 
     } catch (error) {
@@ -81,7 +80,6 @@ export const checkAuth = () => async (dispatch: AuthCheckDispatch) => {
                 const userData = await apiGetUser(tokens.accessToken.split('Bearer ')[1]);
                 dispatch({ type: AUTH_CHECK_SUCCESS, payload: userData.user });
 
-                // Приводим тип dispatch к нужному для startTokenRefresh
                 startTokenRefresh(dispatch as unknown as TokenRefreshDispatch);
                 return;
             }

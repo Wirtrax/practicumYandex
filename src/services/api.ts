@@ -9,7 +9,7 @@ export const getIngredients = async (): Promise<{
     return request('/ingredients');
 };
 
-export const createOrder = async (ingredients: string[]): Promise<{
+export const createOrder = async (ingredients: string[], accessToken: string): Promise<{
     success: boolean;
     order: { number: number }
 }> => {
@@ -17,6 +17,7 @@ export const createOrder = async (ingredients: string[]): Promise<{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
         },
         body: JSON.stringify({ ingredients }),
     });
@@ -123,4 +124,11 @@ export const resetPassword = async (password: string, token: string): Promise<{
         },
         body: JSON.stringify({ password, token }),
     });
+};
+
+export const getOrder = async (orderNumber: number): Promise<{
+    success: boolean;
+    orders: any[]
+}> => {
+    return request(`/orders/${orderNumber}`);
 };

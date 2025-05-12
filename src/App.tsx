@@ -14,18 +14,25 @@ import BurgerIngredients from "./components/BurgerIngredients/BurgerIngredients"
 import OrderDetails from "./components/Modal/OrderModal/OrderDetails";
 import IngredientDetails from "./components/Modal/IngredientDetails/IngredientDetails";
 import Modal from "./components/Modal/Modal";
-
-import style from './App.module.css';
 import Login from "./components/Page/Login/Login";
 import Register from "./components/Page/Register/Register";
 import ForgotPassword from "./components/Page/Forgot-password/ForgotPassword";
 import ForgotPasswordConfirming from "./components/Page/Forgot-password/ForgotPasswordConfirming";
 import Profile from "./components/Profile/Profile";
+import OrderFeed from "./components/Order/Feed/OrderFeed";
+import OneOrder from "./components/Order/OrderPage/OneOrder";
+import OrderDetailsPage from "./components/Order/OrderPage/OrderDetailsPage";
+import OrderHistory from "./components/Order/OrderHistory/OrderHistory";
+
 import { ProtectedAuthorizedRoute } from "./components/ProtectedRoutes/ProtectedAuthorizedRoute";
 import { ProtectedUnauthorizedRoute } from "./components/ProtectedRoutes/ProtectedUnauthorizedRoute"
+
+import style from './App.module.css';
+
 import { checkAuth } from "./services/actions/refreshTokenAction";
 import { useAppDispatch, useAppSelector } from './types/hooks';
 import { ConstructorIngredient, Ingredient } from './types/ingredient';
+
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -83,6 +90,7 @@ const App: React.FC = () => {
     });
   };
 
+
   const openOrderModal = () => {
     const ingredientsIds = [
       bun?._id,
@@ -111,6 +119,14 @@ const App: React.FC = () => {
     });
   };
 
+  const closeOrderDetailsModal = () => {
+    const isProfileOrder = location.pathname.startsWith('/profile/orders');
+    navigate(isProfileOrder ? '/profile/orders' : '/feed', {
+      replace: true,
+      state: null
+    });
+  };
+
   return (
     <>
       <AppHeader />
@@ -122,9 +138,22 @@ const App: React.FC = () => {
           <Route path="/reset-password" element={<ForgotPasswordConfirming />} />
         </Route>
 
+        <Route path="/feed" element={<OrderFeed />} />
+        <Route path="/feed/:number" element={<OrderDetailsPage />} />
+
         <Route path="/profile" element={
           <ProtectedAuthorizedRoute>
             <Profile />
+          </ProtectedAuthorizedRoute>
+        } />
+        <Route path="/profile/orders" element={
+          <ProtectedAuthorizedRoute>
+            <OrderHistory />
+          </ProtectedAuthorizedRoute>
+        } />
+        <Route path="/profile/orders/:number" element={
+          <ProtectedAuthorizedRoute>
+            <OrderDetailsPage />
           </ProtectedAuthorizedRoute>
         } />
 
@@ -148,6 +177,21 @@ const App: React.FC = () => {
         <Modal onClose={closeIngredientModal}>
           <IngredientDetails />
         </Modal>
+      )}
+
+      {backgroundLocation && (
+        <Routes>
+          <Route path="/feed/:number" element={
+            <Modal onClose={closeOrderDetailsModal}>
+              <OneOrder/>
+            </Modal>
+          } />
+          <Route path="/profile/orders/:number" element={
+            <Modal onClose={closeOrderDetailsModal}>
+              <OneOrder/>
+            </Modal>
+          } />
+        </Routes>
       )}
 
       {isOrderModalOpen && (

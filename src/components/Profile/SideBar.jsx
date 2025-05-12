@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './SideBarStyle.module.css'
 import { useDispatch } from "react-redux";
 import { logout } from '../../services/actions/refreshTokenAction';
@@ -18,10 +18,10 @@ function SideBar() {
         <aside className={styles.sideBar}>
             <nav className='pb-20'>
                 <p className="text text_type_main-medium" >
-                    Профиль
+                    <Link to='/profile'>Профиль</Link>
                 </p>
                 <p className="text text_type_main-medium text_color_inactive" >
-                    История заказов
+                    <Link to='/profile/orders'>История заказов</Link>
                 </p>
                 <p className="text text_type_main-medium text_color_inactive" onClick={handleSubmit}  >
                     Выход

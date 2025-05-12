@@ -1,13 +1,16 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import { useSelector } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
 
 import { addIngredient, removeIngredient, moveIngredient } from '../../services/actions/constructorActions';
+import { createOrderAction } from '../../services/actions/orderActions';
+import { connectUserOrders } from '../../services/actions/userOrdersActions';
 
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./BurgerConstructor.module.css";
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
 import { ConstructorIngredient } from '../../types/ingredient';
+import Loader from "../Loader/Loader";
 
 interface BurgerConstructorProps {
     openOrderModal: () => void;
@@ -23,6 +26,8 @@ interface DraggableIngredientProps {
 const BurgerConstructor: React.FC<BurgerConstructorProps> = ({ openOrderModal }) => {
     const dispatch = useAppDispatch();
     const { bun, ingredients } = useAppSelector((state) => state.burgerConstructor);
+    const [isOrderProcessing, setIsOrderProcessing] = useState(false);
+    const isOrderProcessingRef = useRef(false);
 
     const totalPrice = useMemo(() => {
         const ingredientsPrice = ingredients.reduce((sum, ingredient) => sum + ingredient.price, 0);
@@ -39,6 +44,29 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({ openOrderModal })
 
     const moveIngredientHandler = (fromIndex: number, toIndex: number) => {
         dispatch(moveIngredient(fromIndex, toIndex));
+    };
+
+    const handleCreateOrder = async () => {
+        if (!bun || isOrderProcessingRef.current) return;
+
+        isOrderProcessingRef.current = true;
+        setIsOrderProcessing(true);
+
+        try {
+            const ingredientIds = [
+                bun._id,
+                ...ingredients.map(ingredient => ingredient._id),
+                bun._id
+            ];
+            await dispatch(createOrderAction(ingredientIds));
+            openOrderModal();
+            dispatch(connectUserOrders());
+        } catch (error) {
+            console.error('Ошибка создания заказа:', error);
+        } finally {
+            isOrderProcessingRef.current = false;
+            setIsOrderProcessing(false);
+        }
     };
 
     return (
@@ -83,9 +111,16 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({ openOrderModal })
                 <span className="text text_type_digits-medium pr-10">
                     {totalPrice} <CurrencyIcon type="primary" />
                 </span>
-                <Button htmlType="button" type="primary" size="large" onClick={openOrderModal}>
-                    Оформить заказ
+                <Button
+                    htmlType="button"
+                    type="primary"
+                    size="large"
+                    onClick={handleCreateOrder}
+                    disabled={!bun || isOrderProcessing}
+                >
+                    {isOrderProcessing ? 'Создание заказа...' : 'Оформить заказ'}
                 </Button>
+                {isOrderProcessing && <Loader />}
             </div>
         </section>
     );

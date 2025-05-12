@@ -2,6 +2,7 @@ import { Ingredient, ConstructorIngredient } from './ingredient';
 import { User } from './user';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AppActions } from './actions';
+import { Order } from './order';
 
 export type RootState = {
     ingredients: IngredientsState;
@@ -14,6 +15,9 @@ export type RootState = {
     forgotPassword: PasswordResetState;
     resetPassword: PasswordResetState;
     updateUser: UpdateUserState;
+    ws: WSState;
+    userOrders: WSUserOrdersState;
+    orderDetails: OrderDetailsState;
 };
 
 export type AppDispatch = ThunkDispatch<RootState, unknown, AppActions>;
@@ -72,4 +76,25 @@ export type UpdateUserState = {
     getUserFailed: boolean;
     updateUserRequest: boolean;
     updateUserFailed: boolean;
+};
+
+export type OrderDetailsState = {
+    currentOrder: Order | null;
+    isLoading: boolean;
+    error: string | null;
+};
+
+export type WSState = {
+    wsConnected: boolean;
+    orders: Order[];
+    total: number;
+    totalToday: number;
+    ingredientsMap: Record<string, Ingredient>;
+    error: string | null;
+};
+
+export type WSUserOrdersState = {
+    wsConnected: boolean;
+    orders: Order[];
+    error: string | null;
 };
