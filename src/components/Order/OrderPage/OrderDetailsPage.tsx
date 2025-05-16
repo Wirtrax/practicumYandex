@@ -1,10 +1,10 @@
 import { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { clearCurrentOrder } from '../../../services/actions/orderDetailsActions';
 import OneOrder from './OneOrder';
+import { useAppDispatch } from '../../../types/hooks';
 
 const OrderDetailsPage: FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         return () => {

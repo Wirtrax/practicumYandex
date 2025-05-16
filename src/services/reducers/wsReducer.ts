@@ -2,7 +2,8 @@ import {
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
-    WS_GET_MESSAGE
+    WS_GET_MESSAGE,
+    WS_DISCONNECT
 } from '../actions/wsActions';
 import { Order } from '../../types/order';
 import { Ingredient } from '../../types/ingredient';
@@ -43,7 +44,7 @@ export const wsReducer = (
                 error: action.payload as string,
                 wsConnected: false
             };
-
+        case WS_DISCONNECT:
         case WS_CONNECTION_CLOSED:
             return {
                 ...state,

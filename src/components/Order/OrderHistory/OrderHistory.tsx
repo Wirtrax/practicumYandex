@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import SideBar from '../../Profile/SideBar';
 import CardOrder from '../Feed/CardOrder';
@@ -9,15 +8,16 @@ import Loader from '../../Loader/Loader';
 import { Order } from '../../../types/order';
 import { RootState } from '../../../types/store';
 import { Ingredient } from '../../../types/ingredient';
+import { useAppDispatch, useAppSelector } from '../../../types/hooks';
 
 
 const OrderHistory: FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { orders = [], wsConnected } = useSelector((state: RootState) => state.userOrders);
-    const ingredientsMap = useSelector((state: RootState) =>
+    const { orders = [], wsConnected } = useAppSelector((state: RootState) => state.userOrders);
+    const ingredientsMap = useAppSelector((state: RootState) =>
         state.ingredients.ingredients.reduce((acc: Record<string, Ingredient>, item) => {
             acc[item._id] = item;
             return acc;

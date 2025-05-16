@@ -1,16 +1,16 @@
 import { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CardOrder from './CardOrder';
 import style from './OrderFeedStyle.module.css';
 import OrdersInformation from './OrdersInformation';
-import { connectFeed } from '../../../services/actions/orderFeedActions';
+import { connectFeed, disconnectFeed } from '../../../services/actions/orderFeedActions';
 import Loader from '../../Loader/Loader';
 import { Order } from '../../../types/order';
 import {RootState} from '../../../types/store'
+import { useAppDispatch, useAppSelector } from '../../../types/hooks';
 
 const OrderFeed: FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const {
@@ -19,12 +19,12 @@ const OrderFeed: FC = () => {
         totalToday = 0,
         ingredientsMap = {},
         wsConnected
-    } = useSelector((state: RootState) => state.ws);
+    } = useAppSelector((state: RootState) => state.ws);
 
     useEffect(() => {
         dispatch(connectFeed());
         return () => {
-          
+            dispatch(disconnectFeed())
         };
     }, [dispatch]);
 

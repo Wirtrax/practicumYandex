@@ -1,5 +1,4 @@
 import React, { useMemo, useState, useRef } from "react";
-import { useSelector } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
 
 import { addIngredient, removeIngredient, moveIngredient } from '../../services/actions/constructorActions';

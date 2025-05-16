@@ -3,7 +3,8 @@ import {
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
-    WS_GET_MESSAGE
+    WS_GET_MESSAGE,
+    WS_DISCONNECT
 } from '../services/actions/wsActions';
 import { fetchIngredients } from '../services/actions/ingredientsActions';
 import { Middleware } from 'redux';
@@ -22,6 +23,7 @@ export const wsMiddleware = (): Middleware<{}, RootState, AppDispatch> => {
             if (type === WS_CONNECTION_START) {
                 if (socket) {
                     socket.close();
+                    socket = null;
                 }
 
                 socket = new WebSocket(payload as string);
@@ -31,15 +33,19 @@ export const wsMiddleware = (): Middleware<{}, RootState, AppDispatch> => {
                     dispatch(fetchIngredients());
                 };
 
-                socket.onerror = () => {
+                socket.onerror = (event) => {
                     dispatch({
                         type: WS_CONNECTION_ERROR,
                         payload: 'WebSocket error'
                     });
+                    console.error('WebSocket error:', event);
                 };
 
-                socket.onclose = () => {
-                    dispatch({ type: WS_CONNECTION_CLOSED });
+                socket.onclose = (event) => {
+                    if (!event.wasClean) {
+                        dispatch({ type: WS_CONNECTION_CLOSED });
+                    }
+                    socket = null;
                 };
 
                 socket.onmessage = (event: MessageEvent) => {
@@ -72,6 +78,11 @@ export const wsMiddleware = (): Middleware<{}, RootState, AppDispatch> => {
                         console.error('Error parsing WebSocket message:', error);
                     }
                 };
+            }
+
+            if (type === WS_DISCONNECT && socket) {
+                socket.close();
+                socket = null;
             }
 
             next(action);
