@@ -2,7 +2,7 @@ import { SET_CURRENT_INGREDIENT, CLEAR_CURRENT_INGREDIENT } from '../actions/ing
 import { IngredientDetailsState } from '../../types/store';
 import { SetCurrentIngredientAction, ClearCurrentIngredientAction } from '../../types/actions';
 
-const initialState: IngredientDetailsState = {
+export const initialState: IngredientDetailsState = {
     currentIngredient: null,
 };
 

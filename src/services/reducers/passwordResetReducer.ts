@@ -16,7 +16,7 @@ import {
     ResetPasswordFailedAction
 } from '../../types/actions';
 
-const initialState: PasswordResetState = {
+export const initialState: PasswordResetState = {
     request: false,
     failed: false,
     success: false,

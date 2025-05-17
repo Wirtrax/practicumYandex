@@ -1,4 +1,5 @@
 import { updateUserReducer } from './updateUserReducer';
+import { initialState } from './updateUserReducer';
 import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
@@ -9,13 +10,6 @@ import {
 } from '../actions/updateUser';
 
 describe('updateUser reducer', () => {
-    const initialState = {
-        user: null,
-        getUserRequest: false,
-        getUserFailed: false,
-        updateUserRequest: false,
-        updateUserFailed: false,
-    };
 
     const user = { name: 'Test User', email: 'test@example.com' };
 

@@ -1,4 +1,5 @@
 import { wsReducer } from './wsReducer';
+import { initialState } from './wsReducer';
 import {
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
@@ -8,14 +9,6 @@ import {
 } from '../actions/wsActions';
 
 describe('ws reducer', () => {
-    const initialState = {
-        wsConnected: false,
-        orders: [],
-        total: 0,
-        totalToday: 0,
-        ingredientsMap: {},
-        error: null
-    };
 
     const message = {
         orders: [{

@@ -1,4 +1,5 @@
 import { userOrdersReducer } from './userOrdersReducer';
+import { initialState } from './userOrdersReducer';
 import {
     WS_USER_ORDERS_CONNECTION_SUCCESS,
     WS_USER_ORDERS_CONNECTION_ERROR,
@@ -8,11 +9,6 @@ import {
 import { Order } from '../../types/order';
 
 describe('userOrders reducer', () => {
-    const initialState = {
-        wsConnected: false,
-        orders: [],
-        error: null
-    };
 
     const orders:Order[] = [{
         _id: '1',

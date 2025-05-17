@@ -16,7 +16,7 @@ import {
     UpdateUserFailedAction
 } from '../../types/actions';
 
-const initialState: UpdateUserState = {
+export const initialState: UpdateUserState = {
     user: null,
     getUserRequest: false,
     getUserFailed: false,

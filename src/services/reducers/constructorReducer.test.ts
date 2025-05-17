@@ -1,4 +1,5 @@
 import constructorReducer from './constructorReducer';
+import { initialState } from './constructorReducer';
 import {
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
@@ -7,11 +8,7 @@ import {
 } from '../actions/constructorActions';
 
 describe('constructor reducer', () => {
-    const initialState = {
-        bun: null,
-        ingredients: [],
-        counts: {},
-    };
+
 
     const bun = {
         _id: '1',

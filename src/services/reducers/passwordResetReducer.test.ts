@@ -1,4 +1,5 @@
 import { passwordResetReducer } from './passwordResetReducer';
+import { initialState } from './passwordResetReducer';
 import {
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
@@ -9,13 +10,6 @@ import {
 } from '../actions/passwordResetActions';
 
 describe('passwordReset reducer', () => {
-    const initialState = {
-        request: false,
-        failed: false,
-        success: false,
-        error: null,
-        message: null
-    };
 
     const message = 'Test message';
 

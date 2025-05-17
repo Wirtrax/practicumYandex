@@ -1,13 +1,11 @@
 import ingredientDetailsReducer from './ingredientDetailsReducer';
+import { initialState } from './ingredientDetailsReducer';
 import {
     SET_CURRENT_INGREDIENT,
     CLEAR_CURRENT_INGREDIENT
 } from '../actions/ingredientDetailsActions';
 
 describe('ingredientDetails reducer', () => {
-    const initialState = {
-        currentIngredient: null,
-    };
 
     const ingredient = {
         _id: '1',

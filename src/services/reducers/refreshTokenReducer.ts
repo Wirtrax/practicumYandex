@@ -20,7 +20,7 @@ import {
     AuthCheckCompletedAction
 } from '../../types/actions';
 
-const initialState: RefreshTokenState = {
+export const initialState: RefreshTokenState = {
     user: null,
     isAuth: false,
     isAuthChecked: false,

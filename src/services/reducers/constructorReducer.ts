@@ -7,7 +7,7 @@ import {
 import { ConstructorState } from '../../types/store';
 import { ConstructorActions } from '../../types/actions';
 
-const initialState: ConstructorState = {
+export const initialState: ConstructorState = {
     bun: null,
     ingredients: [],
     counts: {},

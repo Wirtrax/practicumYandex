@@ -10,7 +10,7 @@ import {
     RegisterFailedAction
 } from '../../types/actions';
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
     user: null,
     isAuth: false,
     isLoading: false,

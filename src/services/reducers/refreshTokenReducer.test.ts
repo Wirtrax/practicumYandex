@@ -1,4 +1,5 @@
 import { refreshTokenReducer } from './refreshTokenReducer';
+import { initialState } from './refreshTokenReducer';
 import {
     AUTH_CHECK_REQUEST,
     AUTH_CHECK_SUCCESS,
@@ -11,12 +12,6 @@ import {
 } from '../actions/refreshTokenAction';
 
 describe('refreshToken reducer', () => {
-    const initialState = {
-        user: null,
-        isAuth: false,
-        isAuthChecked: false,
-        tokenRefreshLoading: false,
-    };
 
     const user = { name: 'Test User', email: 'test@example.com' };
 

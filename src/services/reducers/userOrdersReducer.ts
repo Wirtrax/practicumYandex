@@ -7,7 +7,7 @@ import {
 import { Order } from '../../types/order';
 import { WSUserOrdersState } from '../../types/store';
 
-const initialState: WSUserOrdersState = {
+export const initialState: WSUserOrdersState = {
     wsConnected: false,
     orders: [],
     error: null

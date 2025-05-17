@@ -1,4 +1,5 @@
 import { registrationReducer } from './registrationReducer';
+import { initialState } from './registrationReducer';
 import {
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
@@ -6,12 +7,6 @@ import {
 } from '../actions/registrationAction';
 
 describe('registration reducer', () => {
-    const initialState = {
-        user: null,
-        isAuth: false,
-        isLoading: false,
-        error: null,
-    };
 
     const user = { name: 'Test User', email: 'test@example.com' };
 

@@ -1,4 +1,5 @@
 import ingredientsReducer from './ingredientsReducer';
+import { initialState } from './ingredientsReducer';
 import {
     FETCH_INGREDIENTS_REQUEST,
     FETCH_INGREDIENTS_SUCCESS,
@@ -6,11 +7,6 @@ import {
 } from '../actions/ingredientsActions';
 
 describe('ingredients reducer', () => {
-    const initialState = {
-        ingredients: [],
-        loading: false,
-        error: null,
-    };
 
     const ingredients = [{
         _id: '1',

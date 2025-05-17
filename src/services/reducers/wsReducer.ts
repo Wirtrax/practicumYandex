@@ -9,7 +9,7 @@ import { Order } from '../../types/order';
 import { Ingredient } from '../../types/ingredient';
 import { WSState } from '../../types/store';
 
-const initialState: WSState = {
+export const initialState: WSState = {
     wsConnected: false,
     orders: [],
     total: 0,

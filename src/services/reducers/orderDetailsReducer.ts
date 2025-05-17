@@ -8,7 +8,7 @@ import {
 import { Order } from '../../types/order';
 import { OrderDetailsState } from '../../types/store';
 
-const initialState: OrderDetailsState = {
+export const initialState: OrderDetailsState = {
     currentOrder: null,
     isLoading: false,
     error: null

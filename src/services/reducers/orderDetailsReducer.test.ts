@@ -1,4 +1,5 @@
 import { orderDetailsReducer } from './orderDetailsReducer';
+import { initialState } from './orderDetailsReducer';
 import {
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
@@ -8,11 +9,6 @@ import {
 } from '../actions/orderDetailsActions';
 
 describe('orderDetails reducer', () => {
-    const initialState = {
-        currentOrder: null,
-        isLoading: false,
-        error: null
-    };
 
     type OrderStatus = 'done' | 'created' | 'pending';
 

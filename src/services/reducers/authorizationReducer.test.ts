@@ -1,4 +1,5 @@
 import { authReducer } from './authorizationReducer';
+import { initialState } from './authorizationReducer';
 import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
@@ -6,12 +7,6 @@ import {
 } from '../actions/authAction';
 
 describe('auth reducer', () => {
-    const initialState = {
-        user: null,
-        isAuth: false,
-        isLoading: false,
-        error: null,
-    };
 
     it('should return the initial state', () => {
         expect(authReducer(undefined, { type: 'UNKNOWN_ACTION' } as any)).toEqual(initialState);
