@@ -8,8 +8,8 @@ interface OrderDetailsProps {
 
 const OrderDetails: React.FC<OrderDetailsProps> = ({ orderNumber }) => {
     return (
-        <div className={`${style.container} p-30`}>
-            <p className="text text_type_digits-large pb-8">{orderNumber}</p>
+        <div className={`${style.container} p-30` } data-testid="order-details">
+            <p className="text text_type_digits-large pb-8" data-testid="order-number">{orderNumber}</p>
             <p className="text text_type_main-medium pb-15">идентификатор заказа</p>
             <img src={done} alt="done" />
             <p className="text text_type_main-default pb-2 pt-15">Ваш заказ начали готовить</p>

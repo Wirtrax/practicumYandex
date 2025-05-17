@@ -7,7 +7,7 @@ interface ModalOverlayProps {
 }
 
 const ModalOverlay: React.FC<ModalOverlayProps> = ({ onClose, children }) => {
-  return <div className={styles.overlay} onClick={onClose}>
+  return <div className={styles.overlay} onClick={onClose} data-testid="modal-overlay">
     {children}
   </div>;
 }

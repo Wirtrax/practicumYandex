@@ -9,8 +9,10 @@ export default defineConfig({
   },
 
   e2e: {
+    env: {
+      apiUrl: "https://norma.nomoreparties.space/api",
+    },
     setupNodeEvents(on, config) {
-      // implement node event listeners here
     },
   },
 });

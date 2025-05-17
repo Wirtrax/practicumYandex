@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import { useSelector } from "react-redux";
 import { useDrag } from 'react-dnd';
 import { Counter, CurrencyIcon, Tab as ImportedTab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredientsStyle.module.css";
@@ -70,7 +69,7 @@ const IngredientCategory: React.FC<IngredientCategoryProps> = ({
   counts
 }) => {
   return (
-    <div key={type} ref={(el) => (categoryRefs.current[type] = el)}>
+    <div key={type} ref={(el) => (categoryRefs.current[type] = el)} data-testid={`ingredient-section-${type}`}>
       <h3 className="text text_type_main-medium pb-6 pt-10">{name}</h3>
       <div className={styles.mainContainer}>
         {ingredients.map((ingredient) => (
@@ -97,6 +96,8 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient, onIngredientClick, 
       ref={drag}
       className={`${styles.carIngridient} pl-4 pr-6 pb-8`}
       onClick={() => onIngredientClick(ingredient)}
+      data-testid={`ingredient-item-${ingredient._id}`}
+      data-type={ingredient.type}
     >
       {counts[ingredient._id] > 0 && <Counter count={counts[ingredient._id]} />}
       <img src={ingredient.image} alt={ingredient.name} className={`${styles.igridientImg} pl-4 pr-4 pb-1`} />
@@ -172,7 +173,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({ onIngredientClick
           categories={categories}
           categoryRefs={categoryRefs}
         />
-        <div className={styles.scrollContainer} ref={scrollContainerRef}>
+        <div className={styles.scrollContainer} ref={scrollContainerRef} >
           {categories.map(({ type, name }) => (
             <IngredientCategory
               key={type}

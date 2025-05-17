@@ -24,7 +24,7 @@ interface DraggableIngredientProps {
 
 const BurgerConstructor: React.FC<BurgerConstructorProps> = ({ openOrderModal }) => {
     const dispatch = useAppDispatch();
-    const { bun, ingredients } = useAppSelector((state) => state.burgerConstructor);
+    const { bun, ingredients = [] } = useAppSelector((state) => state.burgerConstructor);
     const [isOrderProcessing, setIsOrderProcessing] = useState(false);
     const isOrderProcessingRef = useRef(false);
 
@@ -69,20 +69,21 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({ openOrderModal })
     };
 
     return (
-        <section className={`${style.container} pt-25 pl-4 pr-4`} ref={drop}>
+        <section className={`${style.container} pt-25 pl-4 pr-4`} ref={drop} data-testid="constructor-drop-target" >
             {bun && (
-                <div className="pb-4 pr-4">
+                <div className="pb-4 pr-4" data-testid="constructor-bun-top" data-type="bun">
                     <ConstructorElement
                         type="top"
                         isLocked
                         text={`${bun.name} (верх)`}
                         price={bun.price}
                         thumbnail={bun.image}
+
                     />
                 </div>
             )}
 
-            <div className={style.scrollBar}>
+            <div className={style.scrollBar} data-testid="constructor-main-ingredients" >
                 {ingredients.map((ingredient, index) => (
                     <DraggableIngredient
                         key={`${ingredient.uuid}`}
@@ -90,24 +91,26 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({ openOrderModal })
                         index={index}
                         moveIngredientHandler={moveIngredientHandler}
                         removeIngredient={() => dispatch(removeIngredient(index))}
+                        data-testid="ingredient-item"
                     />
                 ))}
             </div>
 
             {bun && (
-                <div className="pr-4">
+                <div className="pr-4" data-testid="constructor-bun-bottom" data-type="bun">
                     <ConstructorElement
                         type="bottom"
                         isLocked
                         text={`${bun.name} (низ)`}
                         price={bun.price}
                         thumbnail={bun.image}
+
                     />
                 </div>
             )}
 
             <div className="pt-10">
-                <span className="text text_type_digits-medium pr-10">
+                <span className="text text_type_digits-medium pr-10" data-testid="total-price">
                     {totalPrice} <CurrencyIcon type="primary" />
                 </span>
                 <Button
@@ -116,6 +119,7 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({ openOrderModal })
                     size="large"
                     onClick={handleCreateOrder}
                     disabled={!bun || isOrderProcessing}
+                    data-testid="order-button"
                 >
                     {isOrderProcessing ? 'Создание заказа...' : 'Оформить заказ'}
                 </Button>
@@ -147,13 +151,15 @@ const DraggableIngredient: React.FC<DraggableIngredientProps> = ({
     });
 
     return (
-        <div ref={(node) => drag(drop(node))} className={`${style.dndItem} pb-4`}>
+        <div ref={(node) => drag(drop(node))} className={`${style.dndItem} pb-4`} data-testid="constructor-ingredient">
             <DragIcon type="primary" />
             <ConstructorElement
                 text={ingredient.name}
                 price={ingredient.price}
                 thumbnail={ingredient.image}
                 handleClose={removeIngredient}
+                data-testid="ingredient-item"
+                
             />
         </div>
     );
