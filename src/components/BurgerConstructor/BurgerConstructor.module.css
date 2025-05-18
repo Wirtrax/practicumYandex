@@ -1,0 +1,17 @@
+.container{
+    text-align:right;
+    max-width: 568px;
+}
+
+.scrollBar{
+    height: 47vh;
+    overflow-Y: auto;
+    width: 100%;
+    scrollbar-Width: thin 
+}
+
+.dndItem{
+    display: flex;
+    align-items: center;
+    padding-right: 8px;
+}

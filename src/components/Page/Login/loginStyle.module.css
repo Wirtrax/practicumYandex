@@ -1,0 +1,29 @@
+.container {
+    height: 90vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loginForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 24px;
+}
+.groupSubButtom{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+
+}
+.subButtom * {
+    padding: 0;
+}
+.subButtom span{
+    padding-right: 10px;
+}

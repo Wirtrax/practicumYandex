@@ -1,0 +1,45 @@
+.oneOrder {
+    height: 100%;
+    padding-top: 5%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.oneOrder h3 {
+    text-align: center;
+}
+
+.oneOrder>p:first-of-type {
+    color: rgba(0, 204, 204, 1);
+}
+
+.scrollFood {
+    height: 300px;
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+
+    overflow-y: scroll;
+    scrollbar-color: #8585AD #2f2f3700;
+
+    padding: 5px 24px 5px 0px;
+}
+
+.ingridientGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.ingridient {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ingridientGroup>span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
