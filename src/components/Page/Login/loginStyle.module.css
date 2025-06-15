@@ -27,3 +27,9 @@
 .subButtom span{
     padding-right: 10px;
 }
+
+@media(max-width:500px){
+    .inputPhoneV>*{
+        width: 300px;
+    }
+}

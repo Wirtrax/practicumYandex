@@ -23,12 +23,17 @@
 
 }
 
-.groupSubButtom div * {
-    padding: 0;
+.groupSubButtom div {
+    text-align: center;
+    width: auto;
 }
 
 .groupSubButtom div span {
     padding-right: 10px;
+}
+
+.groupSubButtom div span~* {
+    padding: 0;
 }
 
 a {

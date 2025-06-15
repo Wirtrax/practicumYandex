@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './OrderFeedStyle.module.css';
 import Food from './Food';
@@ -9,12 +9,26 @@ interface CardOrderProps {
     order: Order;
     ingredientsMap: Record<string, Ingredient>;
     onClick?: (order: Order) => void;
+    alwaysShowStatus?: boolean;
 }
 
-const CardOrder: FC<CardOrderProps> = ({ order, ingredientsMap, onClick }) => {
+const CardOrder: FC<CardOrderProps> = ({ order, ingredientsMap, onClick, alwaysShowStatus }) => {
+    const [showStatus, setShowStatus] = useState(false)
+    const [maxIngredients, setMaxIngredients] = useState(6)
+    useEffect(() => {
+        const handleResize = () => {
+            const windowInnerWidth = document.documentElement.clientWidth
+            setShowStatus(windowInnerWidth <= 750)
+            setMaxIngredients(windowInnerWidth <= 750 ? 3 : 6)
+        }
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [])
+
     if (!order || !ingredientsMap) return null;
 
-    const { number, createdAt, name, status, ingredients = [] } = order;
+    const { status, number, createdAt, name, ingredients = [] } = order;
 
     const price = ingredients.reduce((sum, id) => {
         return sum + (ingredientsMap[id]?.price || 0);
@@ -24,14 +38,13 @@ const CardOrder: FC<CardOrderProps> = ({ order, ingredientsMap, onClick }) => {
     const uniqueIds = new Set<string>();
 
     ingredients.forEach(id => {
-        if (!uniqueIds.has(id) && displayIngredients.length < 6) {
+        if (!uniqueIds.has(id) && displayIngredients.length < maxIngredients) {
             uniqueIds.add(id);
             displayIngredients.push(id);
         }
     });
 
     const remaining = Math.max(0, ingredients.length - displayIngredients.length);
-
     return (
         <div
             className={style.cardContainer}
@@ -45,7 +58,7 @@ const CardOrder: FC<CardOrderProps> = ({ order, ingredientsMap, onClick }) => {
                 </span>
             </div>
             <h3 className="text text_type_main-medium">{name}</h3>
-            {status && (
+            {(alwaysShowStatus || showStatus) && status && (
                 <p className="text text_type_main-default" style={{ color: status === 'done' ? '#00CCCC' : 'white' }}>
                     {status === 'done' ? 'Выполнен' : 'В работе'}
                 </p>

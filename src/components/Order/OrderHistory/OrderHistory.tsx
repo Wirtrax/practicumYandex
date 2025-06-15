@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import SideBar from '../../Profile/SideBar';
 import CardOrder from '../Feed/CardOrder';
@@ -10,22 +10,26 @@ import { RootState } from '../../../types/store';
 import { Ingredient } from '../../../types/ingredient';
 import { useAppDispatch, useAppSelector } from '../../../types/hooks';
 
-
 const OrderHistory: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
     const { orders = [], wsConnected } = useAppSelector((state: RootState) => state.userOrders);
-    const ingredientsMap = useAppSelector((state: RootState) =>
-        state.ingredients.ingredients.reduce((acc: Record<string, Ingredient>, item) => {
+    const ingredients = useAppSelector((state: RootState) => state.ingredients.ingredients);
+
+    const ingredientsMap = useMemo(() => {
+        return ingredients.reduce((acc: Record<string, Ingredient>, item) => {
             acc[item._id] = item;
             return acc;
-        }, {}));
+        }, {});
+    }, [ingredients]);
 
-    const sortedOrders = [...orders].sort((a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
+    const sortedOrders = useMemo(() => {
+        return [...orders].sort((a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+    }, [orders]);
 
     useEffect(() => {
         dispatch(connectUserOrders());
@@ -33,7 +37,7 @@ const OrderHistory: FC = () => {
         };
     }, [dispatch]);
 
-    const handleOrderClick = (order: Order) => {
+    const handleOrderClick = useMemo(() => (order: Order) => {
         navigate(`/profile/orders/${order.number}`, {
             state: {
                 modal: true,
@@ -41,7 +45,7 @@ const OrderHistory: FC = () => {
                 orderData: order
             }
         });
-    };
+    }, [navigate, location]);
 
     if (!wsConnected) {
         return <Loader />;
@@ -49,12 +53,13 @@ const OrderHistory: FC = () => {
 
     return (
         <div className={style.orderHistoryContainer}>
-            <SideBar />
+            <SideBar info='В этом разделе вы можете просмотреть свою историю заказов' />
             <div className={style.historyFeed}>
                 {sortedOrders.map(order => (
                     <CardOrder
                         key={order._id}
                         order={order}
+                        alwaysShowStatus={true}
                         ingredientsMap={ingredientsMap}
                         onClick={handleOrderClick}
                     />

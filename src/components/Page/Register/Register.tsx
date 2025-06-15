@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../../types/hooks';
 
 import { useForm } from "../../../hook/useForm";
 
+import style from '../Login/loginStyle.module.css'
 
 const Register: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -38,6 +39,7 @@ const Register: React.FC = () => {
                     value={values.name}
                     onChange={(handleChange)}
                     name="name"
+                    extraClass={style.inputPhoneV}
                 />
                 <Input
                     type="email"
@@ -45,11 +47,13 @@ const Register: React.FC = () => {
                     value={values.email}
                     onChange={(handleChange)}
                     name="email"
+                    extraClass={style.inputPhoneV}
                 />
                 <PasswordInput
                     value={values.password}
                     onChange={(handleChange)}
                     name="password"
+                    extraClass={style.inputPhoneV}
                 />
             </FormGroup>
             <GroupSubButtom>

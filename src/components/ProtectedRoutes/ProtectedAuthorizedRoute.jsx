@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Loader from '../Loader/Loader';
 
 export const ProtectedAuthorizedRoute = ({ children }) => {
     const location = useLocation();
@@ -10,7 +11,7 @@ export const ProtectedAuthorizedRoute = ({ children }) => {
     const isAuthenticated = isAuthFromAuth || isAuthFromRefresh;
 
     if (!isAuthChecked) {
-        return <div>Проверка аутентификации...</div>;
+        return <Loader/>;
     }
 
     if (!isAuthenticated) {

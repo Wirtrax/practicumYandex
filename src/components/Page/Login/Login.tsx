@@ -10,6 +10,8 @@ import { useAppDispatch } from '../../../types/hooks';
 
 import { useForm } from "../../../hook/useForm";
 
+import style from './loginStyle.module.css'
+
 const Login: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -36,11 +38,13 @@ const Login: React.FC = () => {
                     onChange={(handleChange)}
                     error={false}
                     errorText="Ошибка"
+                    extraClass={style.inputPhoneV}
                 />
                 <PasswordInput
                     value={values.password}
                     onChange={(handleChange)}
                     name="password"
+                    extraClass={style.inputPhoneV}
                 />
             </FormGroup>
             <GroupSubButtom>

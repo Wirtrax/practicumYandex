@@ -14,7 +14,7 @@ interface FoodProps {
 
 const Food: FC<FoodProps> = ({ imgUrl, plus }) => {
     return (
-        <div className={style.imgIngridientInFeed} more={plus || undefined}>
+        <div className={style.imgIngridientInFeed} more={ '+' + plus || null}>
             <img src={imgUrl} alt="" />
         </div>
     );

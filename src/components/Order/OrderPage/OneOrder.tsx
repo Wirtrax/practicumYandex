@@ -98,7 +98,7 @@ const OneOrder: FC = () => {
       </div>
 
       <div className={style.footer}>
-        <p className="text text_type_main-default text_color_inactive pt-10">
+        <p className="text text_type_main-default text_color_inactive">
           <FormattedDate date={new Date(order.createdAt)} />
         </p>
         <div className={style.price}>

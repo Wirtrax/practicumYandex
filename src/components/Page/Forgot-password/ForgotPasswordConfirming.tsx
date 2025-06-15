@@ -8,6 +8,7 @@ import GroupSubButtom from "../utils/GroupSubButtom";
 import { resetPasswordRequest } from "../../../services/actions/passwordResetActions";
 import { useAppDispatch } from '../../../types/hooks';
 import { useForm } from "../../../hook/useForm";
+import style from '../Login/loginStyle.module.css'
 
 const ForgotPasswordConfirming: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -40,6 +41,7 @@ const ForgotPasswordConfirming: React.FC = () => {
                     onChange={handleChange}
                     placeholder="Введите новый пароль"
                     name="password"
+                    extraClass={style.inputPhoneV}
                 />
                 <Input
                     type="text"
@@ -47,6 +49,7 @@ const ForgotPasswordConfirming: React.FC = () => {
                     value={values.token}
                     onChange={handleChange}
                     name="token"
+                    extraClass={style.inputPhoneV}
                 />
             </FormGroup>
             <GroupSubButtom>
