@@ -32,14 +32,30 @@
     gap: 16px;
 }
 
-.ingridient {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
+
 
 .ingridientGroup>span {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.footer {
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+@media (max-width: 750px){
+    .ingridientGroup>img{
+        width: 75px;
+    }
 }

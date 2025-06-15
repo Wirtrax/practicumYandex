@@ -1,17 +1,60 @@
-.container{
-    text-align:right;
+.container {
+    text-align: right;
     max-width: 568px;
 }
 
-.scrollBar{
+.scrollBar {
     height: 47vh;
     overflow-Y: auto;
     width: 100%;
-    scrollbar-Width: thin 
+    scrollbar-Width: thin
 }
 
-.dndItem{
+.dndItem {
     display: flex;
     align-items: center;
     padding-right: 8px;
+}
+
+.mobileContainer {
+    text-align: center;
+    max-width: 100%;
+}
+
+.mobileIngredientsList {
+    max-height: 40vh;
+    overflow-y: auto;
+    width: 100%;
+    scrollbar-width: thin;
+}
+
+.mobileIngredientItem {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.removeButton {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.mobileOrderSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 20px;
 }

@@ -7,6 +7,7 @@ import GroupSubButtom from "../utils/GroupSubButtom";
 import { forgotPasswordRequest } from "../../../services/actions/passwordResetActions";
 import { useAppDispatch } from '../../../types/hooks';
 import { useForm } from "../../../hook/useForm";
+import style from '../Login/loginStyle.module.css'
 
 
 const ForgotPassword: React.FC = () => {
@@ -34,6 +35,7 @@ const ForgotPassword: React.FC = () => {
           name="email"
           value={values.email}
           onChange={handleChange}
+          extraClass={style.inputPhoneV}
         />
       </FormGroup>
       <GroupSubButtom>

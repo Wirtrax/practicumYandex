@@ -62,7 +62,7 @@ const OrderFeed: FC = () => {
                         ))}
                     </div>
                 </div>
-                <div>
+                <div className={style.OrdersInformation}>
                     <OrdersInformation
                         orders={orders}
                         total={total}

@@ -1,4 +1,4 @@
-.container{
+.container {
     max-width: 1280px;
     margin: 0 auto;
     display: flex;
@@ -8,8 +8,21 @@
     gap: 60px;
     margin-top: 5%;
 }
-.inputGroup{
+
+.inputGroup {
     display: flex;
     flex-direction: column;
     gap: 6rem;
+}
+
+@media(max-width:750px) {
+    .container {
+        justify-content: center;
+    }
+}
+
+@media(max-width:500px) {
+    .inputPhoneV>* {
+        width: 300px;
+    }
 }

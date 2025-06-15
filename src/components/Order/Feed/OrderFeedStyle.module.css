@@ -69,8 +69,8 @@
 
 .imgIngridientInFeed>img,
 .imgIngridientInFeedBun>img {
-    width: 45px;
-    width: 45px;
+    height: 44px;
+    width: 44px;
     padding: 3px;
     border-radius: 30px;
     background-color: rgba(19, 19, 22, 1);
@@ -129,6 +129,7 @@
     width: 30px;
     height: 40px;
     z-index: 10;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* OrdersInformation */
@@ -183,6 +184,7 @@
     width: 30px;
     height: 40px;
     z-index: 10;
+    
 }
 
 .imgIngridientInFeedImg {
@@ -191,4 +193,35 @@
     padding: 3px;
     border-radius: 30px;
     background-color: rgba(19, 19, 22, 1);
+}
+
+@media (max-width:1150px) {
+    .OrdersInformation {
+        display: none;
+    }
+
+    .orderFeed {
+        width: 100%;
+    }
+
+
+}
+
+@media (max-width:750px) {
+    .imgIngridientInFeed:nth-child(2)::after {
+        content: attr(more);
+        text-align: center;
+        line-height: 40px;
+        position: absolute;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 4px 8px;
+        border-radius: 50%;
+        width: 30px;
+        height: 40px;
+        z-index: 10;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 }

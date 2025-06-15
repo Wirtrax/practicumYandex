@@ -32,6 +32,7 @@ import style from './App.module.css';
 import { checkAuth } from "./services/actions/refreshTokenAction";
 import { useAppDispatch, useAppSelector } from './types/hooks';
 import { ConstructorIngredient, Ingredient } from './types/ingredient';
+import { BurgerIngredientsMobile } from "./components/BurgerIngredients/BurgerIngredientsMobile";
 
 
 const App: React.FC = () => {
@@ -51,6 +52,7 @@ const App: React.FC = () => {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [backgroundLocation, setBackgroundLocation] = useState<any>(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [checkSize, setCheckSize] = useState(false);
 
   useEffect(() => {
     dispatch(fetchIngredients());
@@ -79,6 +81,16 @@ const App: React.FC = () => {
 
     setIsInitialLoad(false);
   }, [location, ingredients, dispatch, navigate, isInitialLoad]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const windowInnerWidth = document.documentElement.clientWidth
+      setCheckSize(windowInnerWidth < 750)
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [])
 
   const handleIngredientClick = (ingredient: Ingredient) => {
     dispatch(setCurrentIngredient(ingredient));
@@ -160,8 +172,14 @@ const App: React.FC = () => {
         <Route path='/' element={
           <DndProvider backend={HTML5Backend}>
             <section className={style.appGroup}>
-              <BurgerIngredients onIngredientClick={(ingredient) => handleIngredientClick(ingredient)} />
-              <BurgerConstructor openOrderModal={openOrderModal} />
+              {!checkSize ? (
+                <>
+                  <BurgerIngredients onIngredientClick={(ingredient) => handleIngredientClick(ingredient)} />
+                  <BurgerConstructor openOrderModal={openOrderModal} />
+                </>
+              ) :
+                <BurgerIngredientsMobile />
+              }
             </section>
           </DndProvider>
         } />
@@ -183,12 +201,12 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/feed/:number" element={
             <Modal onClose={closeOrderDetailsModal}>
-              <OneOrder/>
+              <OneOrder />
             </Modal>
           } />
           <Route path="/profile/orders/:number" element={
             <Modal onClose={closeOrderDetailsModal}>
-              <OneOrder/>
+              <OneOrder />
             </Modal>
           } />
         </Routes>

@@ -36,7 +36,7 @@ function Profile() {
 
     return (
         <section className={styles.container}>
-            <SideBar />
+            <SideBar info='В этом разделе вы можете изменить свои персональные данные'/>
             <form onSubmit={handleSubmit} className={styles.inputGroup}>
                 <Input
                     type="text"
@@ -46,6 +46,7 @@ function Profile() {
                     icon="EditIcon"
                     onIconClick={() => setIsNameDisabled(!isNameDisabled)}
                     disabled={isNameDisabled}
+                    extraClass={styles.inputPhoneV}
                 />
                 <Input
                     type="email"
@@ -55,17 +56,18 @@ function Profile() {
                     icon="EditIcon"
                     onIconClick={() => setIsEmailDisabled(!isEmailDisabled)}
                     disabled={isEmailDisabled}
+                    extraClass={styles.inputPhoneV}
                 />
                 <PasswordInput
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     icon="EditIcon"
+                    extraClass={styles.inputPhoneV}
                 />
                 <Button
                     htmlType="submit"
                     type="primary"
                     size="medium"
-                    extraClass="ml-2"
                     disabled={updateUserRequest}
                 >
                     {updateUserRequest ? 'Сохранение...' : 'Сохранить'}
